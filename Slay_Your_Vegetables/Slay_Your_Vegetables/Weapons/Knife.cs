@@ -19,14 +19,14 @@ namespace Slay_Your_Vegetables
             }
         }
         
-// Damage decreases by 30% towards the back
+// Damage decreases by 20% towards the back
         public override void Ultimate(List<Enemy> enemies)
         {
             float currentDamage = Damage * 2.5f;
             foreach (var enemy in enemies)
             {
                 enemy.TakeDamage(currentDamage);
-                currentDamage *= 0.7f;
+                currentDamage *= 0.5f;
             }
         }
     }

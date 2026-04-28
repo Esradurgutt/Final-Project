@@ -9,9 +9,10 @@ public class Game1 : Game
 {
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
-    Texture2D _line1,_line2,_line3,_line4,requirements,chefT,weaponUI,UltUI,HealthUI,StaminaUI,ManaUI;
+    Texture2D _line1,_line2,_line3,_line4,requirements,tomatoT,weaponUI,UltUI,HealthUI,StaminaUI,ManaUI;
     Player player;
     Color color;
+    Sprite tomato;
 
     private Texture2D CreateTexture(int width, int height, Color color)
     {
@@ -44,7 +45,9 @@ public class Game1 : Game
         
         
         requirements= CreateTexture(1, 1, Color.White);
-        chefT= Content.Load<Texture2D>("chefT");
+        
+        tomatoT= Content.Load<Texture2D>("tomatoT");
+        tomato= new Sprite(tomatoT,Vector2.Zero);
         weaponUI= CreateTexture(1, 1, Color.White);
         UltUI= CreateTexture(1, 1, Color.White);
         HealthUI= CreateTexture(1, 1, Color.White);
@@ -66,7 +69,7 @@ public class Game1 : Game
     {
         if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
            Exit();
-
+        
         // TODO: Add your update logic here
 
         base.Update(gameTime);
@@ -80,7 +83,8 @@ public class Game1 : Game
             // Window default size is 800x600
         _spriteBatch.Begin();
         
-       
+        _spriteBatch.Draw(tomato.texture,tomato.position,Color.Red);
+
         _spriteBatch.Draw(_line1, new Rectangle(200,45,600,90), Color.Beige);
         _spriteBatch.Draw(_line2, new Rectangle(200,138,600,90), Color.Beige);
         _spriteBatch.Draw(_line3, new Rectangle(200,231,600,90), Color.Beige);

@@ -20,3 +20,22 @@ If you want to add sprites
 
 - Add new class -> public Player : Sprite  
 //look at the player class the rest of them writing in there.
+
+
+
+
+
+Input
+ add boolean variable (bool a=false)
+ -Write in update -> if(!a && Keyboard.GetState().IsKeyDown(Keys.BLABLA))
+                    a=true;
+                    debug.wr "pressed"
+                    if(Keyboard.GetState().IsKeyUp(Keys.BLABLA))
+                    a = false;
+
+                    mouse version:
+                    Mouse.GetState().LeftButton == ButtonState.Pressed
+
+
+add texts
+-Draw() -> _spriteBatch.DrawString(variable," ", new Vector2(x,y), Color.blabla)

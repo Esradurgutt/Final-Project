@@ -1,17 +1,13 @@
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 
-
-
-    internal class Weapons
+namespace Slay_Your_Vegetables
+{
+    public abstract class Weapons
     {
-        public string Name;
-        public int AttackPower;
-        public void Attack(){}
-        public void Ulti(){}
-        
-        
+        public float Damage;
+        public List<string> EffectiveFoods;
 
+        public abstract void Attack(List<Enemy> enemies);
+        public abstract void Ultimate(List<Enemy> enemies);
     }
-    
-
+}

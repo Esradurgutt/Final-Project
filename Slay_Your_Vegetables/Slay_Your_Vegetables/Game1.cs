@@ -83,7 +83,7 @@ public class Game1 : Game
             // Window default size is 800x600
         _spriteBatch.Begin();
         
-        _spriteBatch.Draw(tomato.texture,tomato.position,Color.Red);
+        
 
         _spriteBatch.Draw(_line1, new Rectangle(200,45,600,90), Color.Beige);
         _spriteBatch.Draw(_line2, new Rectangle(200,138,600,90), Color.Beige);

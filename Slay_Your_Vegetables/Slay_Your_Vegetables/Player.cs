@@ -1,35 +1,35 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input; 
+using Microsoft.Xna.Framework.Input;
 
-namespace Slay_Your_Vegetables
+internal class Player : Sprite
 {
-    internal class Player : Sprite
+    public int Speed = 5;
+    public int Width = 50;  
+    public int Height = 50; 
+
+    public Player(Texture2D texture, Vector2 position) : base(texture, position) { }
+
+    public override void Update(GameTime gameTime)
     {
-        private int Speed = 5; 
+        KeyboardState state = Keyboard.GetState();
+        Vector2 movement = Vector2.Zero;
 
-        public Rectangle Rect
-        {
-            get
-            {
-                return new Rectangle((int)Position.X + 35, (int)Position.Y + 50, 90, 90);
-            }
-        }
+        if (state.IsKeyDown(Keys.W)) movement.Y -= 1;
+        if (state.IsKeyDown(Keys.S)) movement.Y += 1;
+        if (state.IsKeyDown(Keys.A)) movement.X -= 1;
+        if (state.IsKeyDown(Keys.D)) movement.X += 1;
 
-        public Player(Texture2D texture, Vector2 position) : base(texture, position)
+        if (movement != Vector2.Zero)
         {
-            
+            movement.Normalize();
+            Position += movement * Speed;
         }
-        //Movement Controls
-        public void Update(GameTime gameTime)
-        {
-            KeyboardState state = Keyboard.GetState();
+    }
 
-            
-            if (state.IsKeyDown(Keys.W)) Position.Y -= Speed;
-            if (state.IsKeyDown(Keys.S)) Position.Y += Speed;
-            if (state.IsKeyDown(Keys.A)) Position.X -= Speed;
-            if (state.IsKeyDown(Keys.D)) Position.X += Speed;
-        }
+    public override void Draw(SpriteBatch spriteBatch)
+    {
+        Rectangle destinationRect = new Rectangle((int)Position.X, (int)Position.Y, Width, Height);
+        spriteBatch.Draw(Texture, destinationRect, Color.White);
     }
 }

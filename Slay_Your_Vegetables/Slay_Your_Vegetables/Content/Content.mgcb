@@ -35,7 +35,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:chefT.png
+/build:chefT.png;chef.png
 
 #begin chickenT.png
 /importer:TextureImporter
@@ -139,6 +139,13 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:line4.png
+
+#begin MainMenu.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:MainMenu.spritefont
 
 #begin tomatoT.png
 /importer:TextureImporter

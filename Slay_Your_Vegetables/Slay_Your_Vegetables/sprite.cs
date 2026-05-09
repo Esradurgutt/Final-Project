@@ -8,14 +8,16 @@ public class Sprite
 
     public Sprite(Texture2D texture, Vector2 position)
     {
-        this.Texture = texture;
-        this.Position = position;
+        Texture = texture;
+        Position = position;
     }
-    //I added it so the player can move.
-    public virtual void Update() { }
+
+    public virtual void Update(GameTime gameTime)
+    {
+    }
 
     public virtual void Draw(SpriteBatch spriteBatch)
     {
-        spriteBatch.Draw(Texture, Position, Color.White);
+        spriteBatch.Draw(Texture, new Rectangle((int)Position.X, (int)Position.Y, 50, 50), Color.Red);
     }
 }

@@ -4,15 +4,15 @@ using Microsoft.Xna.Framework.Graphics;
 public class Sprite
 {
     public Texture2D texture;
-    public Vector2 position;
+    public Vector2 Position;
 
     public Sprite(Texture2D texture, Vector2 position)
     {
         this.texture = texture;
-        this.position = position;
+        this.Position = position;
     }
     public virtual void Draw(SpriteBatch spriteBatch)
     {
-        spriteBatch.Draw(texture,position,Color.White);
+        spriteBatch.Draw(texture,Position,Color.White);
     }
 }

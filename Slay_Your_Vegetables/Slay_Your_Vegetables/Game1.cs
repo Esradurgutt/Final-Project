@@ -8,6 +8,7 @@ namespace Slay_Your_Vegetables;
 public class Game1 : Game
 {
     private GraphicsDeviceManager _graphics;
+    public static Microsoft.Xna.Framework.Content.ContentManager ContentManager;
     private SpriteBatch _spriteBatch;
     Texture2D _line1, _line2, _line3, _line4, requirements, weaponUI, UltUI, HealthUI, StaminaUI, ManaUI, texture;
     LevelManage levelManage;
@@ -33,6 +34,13 @@ public class Game1 : Game
         _graphics = new GraphicsDeviceManager(this);
         Content.RootDirectory = "Content";
         IsMouseVisible = true;
+        _graphics.PreferredBackBufferWidth = (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * 0.8f);
+        _graphics.PreferredBackBufferHeight = (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * 0.8f);
+        _graphics.ApplyChanges();
+        Window.Position = new Point(
+        (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width - _graphics.PreferredBackBufferWidth) / 2,
+        (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height - _graphics.PreferredBackBufferHeight) / 2);
+
     }
 
     protected override void Initialize()
@@ -47,6 +55,7 @@ public class Game1 : Game
     protected override void LoadContent()
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
+        ContentManager = this.Content;
 
 
         if (Enemy.textures.Count == 0)
@@ -96,14 +105,16 @@ public class Game1 : Game
     {
         GraphicsDevice.Clear(Color.CornflowerBlue);
 
-        // TODO: Add your drawing code here
-        // Window default size is 800x600
-        _spriteBatch.Begin();
+        float scaleX = (float)GraphicsDevice.Viewport.Width / 1920f;
+        float scaleY = (float)GraphicsDevice.Viewport.Height / 1080f;
+        Matrix scalingMatrix = Matrix.CreateScale(scaleX, scaleY, 1.0f);
 
-        _spriteBatch.Draw(_line1, new Rectangle(200, 45, 600, 90), Color.Beige);
-        _spriteBatch.Draw(_line2, new Rectangle(200, 138, 600, 90), Color.Beige);
-        _spriteBatch.Draw(_line3, new Rectangle(200, 231, 600, 90), Color.Beige);
-        _spriteBatch.Draw(_line4, new Rectangle(200, 324, 600, 90), Color.Beige);
+        _spriteBatch.Begin(transformMatrix: scalingMatrix);
+
+        _spriteBatch.Draw(_line1, new Rectangle(700, 120, 1220, 200), Color.Beige);
+        _spriteBatch.Draw(_line2, new Rectangle(700, 330, 1220, 200), Color.Beige);
+        _spriteBatch.Draw(_line3, new Rectangle(700, 540, 1220, 200), Color.Beige);
+        _spriteBatch.Draw(_line4, new Rectangle(700, 750, 1220, 200), Color.Beige);
 
         _spriteBatch.Draw(requirements, new Rectangle(350, 0, 150, 35), Color.LightGray);
         _spriteBatch.Draw(weaponUI, new Rectangle(350, 425, 50, 50), Color.LightBlue);

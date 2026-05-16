@@ -74,8 +74,8 @@ public class SpawnManage
         List<int> validIDs = new List<int>(); // the enemy list that saves requirements 
         foreach (var goal in lvl.CurrentLevel.Goals)
         {
-            int id = goal.Key;
-            int required = goal.Value;
+            int id = goal.Key; //enemy ID
+            int required = goal.Value; //requirements
             if (lvl.CurrentLevel.SpawnedCounters[id] < required)
             {
                 validIDs.Add(id);

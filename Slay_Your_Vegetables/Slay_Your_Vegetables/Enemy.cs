@@ -67,6 +67,18 @@ public class Enemy:Sprite, IEnemy
             case 1: return new Lettuce(currentTexture,position);
             case 2: return new Lemon(currentTexture,position);
             case 3: return new Tuna(currentTexture,position);
+            case 4: return new Bread(currentTexture,position);
+            case 5: return new GBeef(currentTexture,position);
+            case 6: return new Eggplant(currentTexture,position);
+            case 7: return new Yogurt(currentTexture,position);
+            case 8: return new Cream(currentTexture,position);
+            case 9: return new Butter(currentTexture,position);
+            case 10: return new Chicken(currentTexture,position);
+            case 11: return new Mushroom(currentTexture,position);
+            case 12: return new Chocolate(currentTexture,position);
+            case 13: return new Banana(currentTexture,position);
+            case 14: return new Biscuit(currentTexture,position);
+
             default: return null;
            
             

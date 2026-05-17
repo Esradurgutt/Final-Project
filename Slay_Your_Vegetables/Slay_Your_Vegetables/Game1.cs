@@ -111,14 +111,14 @@ public class Game1 : Game
 
         _spriteBatch.Begin(transformMatrix: scalingMatrix);
 
-        _spriteBatch.Draw(_line1, new Rectangle(700, 120, 1220, 200), Color.Beige);
-        _spriteBatch.Draw(_line2, new Rectangle(700, 330, 1220, 200), Color.Beige);
-        _spriteBatch.Draw(_line3, new Rectangle(700, 540, 1220, 200), Color.Beige);
-        _spriteBatch.Draw(_line4, new Rectangle(700, 750, 1220, 200), Color.Beige);
+        _spriteBatch.Draw(_line1, new Rectangle(600, 120, 1320, 200), Color.Beige);
+        _spriteBatch.Draw(_line2, new Rectangle(600, 330, 1320, 200), Color.Beige);
+        _spriteBatch.Draw(_line3, new Rectangle(600, 540, 1320, 200), Color.Beige);
+        _spriteBatch.Draw(_line4, new Rectangle(600, 750, 1320, 200), Color.Beige);
 
-        _spriteBatch.Draw(requirements, new Rectangle(350, 0, 150, 35), Color.LightGray);
-        _spriteBatch.Draw(weaponUI, new Rectangle(350, 425, 50, 50), Color.LightBlue);
-        _spriteBatch.Draw(UltUI, new Rectangle(450, 425, 50, 50), Color.Orange);
+        _spriteBatch.Draw(requirements, new Rectangle(710, 0, 500, 100), Color.LightGray);
+        _spriteBatch.Draw(weaponUI, new Rectangle(830, 970, 100, 100), Color.LightBlue);
+        _spriteBatch.Draw(UltUI, new Rectangle(1000, 970, 100, 100), Color.Orange);
         _spriteBatch.Draw(HealthUI, new Rectangle(10, 415, 150, 20), Color.Green);
         _spriteBatch.Draw(StaminaUI, new Rectangle(10, 435, 150, 20), Color.Yellow);
         _spriteBatch.Draw(ManaUI, new Rectangle(10, 455, 150, 20), Color.Blue);

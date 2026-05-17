@@ -13,6 +13,21 @@ public class Sprite
     }
     public virtual void Draw(SpriteBatch spriteBatch)
     {
-        spriteBatch.Draw(texture,Position,Color.White);
+        spriteBatch.Draw(texture, Position, Color.White);
+    }
+}
+public class ScaledSprite : Sprite
+{
+    public Rectangle Rect
+    {
+        get
+        {
+            return new Rectangle((int)Position.X,(int)Position.Y,100,100);
+        }
+    }
+
+    public ScaledSprite(Texture2D texture, Vector2 position) : base(texture, position)
+    {
+
     }
 }

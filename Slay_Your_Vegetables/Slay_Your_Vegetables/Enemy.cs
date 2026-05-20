@@ -1,35 +1,89 @@
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 public interface IEnemy
 {
-    string Name { get; set; }
-    int MaxHP { get; set; }
-    int CurrentHP { get; set; }
-    int AttackPower { get; set; }
-    int Speed { get; set; }
-    void Attack();
-    void DealDamage();
-}
-public class Enemy : Sprite, IEnemy
-{
-    public string Name { get; set; }
-    public int MaxHP { get; set; }
-    public int CurrentHP { get; set; }
-    public int AttackPower { get; set; }
-    public int Speed { get; set; }
+    string Name {get;set;}
+    int MaxHP {get;set;}
+    int CurrentHP {get;set;}
+    int AttackPower {get;set;}
+    float Speed {get;set;}
 
-    public Enemy(Texture2D texture, Vector2 position) : base(texture, position)
-    {
+    void DealDamage();
+    void TakeDamage();
+    void PushBack();
+}
+public class Enemy:Sprite, IEnemy
+{
+    public static Dictionary<int, Texture2D> textures= new Dictionary<int, Texture2D>();// texture ile ID leri bağladık
+
+    public string Name {get;set;}
+    public int MaxHP {get;set;}
+    public int CurrentHP {get;set;}
+    public int AttackPower {get;set;}
+    public float Speed {get;set;}
     
+
+    protected WalkAnimation walkAnimation;
+    protected AttackAnimation attackAnimation;
+    protected Animation animation;
+    
+    public Enemy(Texture2D texture,Vector2 position) :base(texture,position) {}
+
+    public virtual void DealDamage(){}
+    public virtual void TakeDamage(){}
+    public virtual void PushBack(){}
+
+    public virtual void Update(GameTime gameTime) 
+    {
+        if(animation != null)
+        {
+            animation.Update(gameTime);
+            this.texture= animation.CurrentTexture;
+
+            if (animation is WalkAnimation && animation.isfinished)
+            {
+                animation= attackAnimation;
+            }
+
+        }
+        Position.X-= Speed;
+        
     }
 
-    //I added it so that no error would appear.
-    public void TakeDamage(float amount) { }
-    public void PushBack(float force) { }
+    public static Enemy CreateEnemy(int ID, Vector2 position) // It is for create enemy in levels with Enemy ID's
+    {
+        if(!textures.ContainsKey(ID))
+        {
+            return null;
+        }
+        Texture2D currentTexture= textures[ID];
+        switch (ID)
+        {
+            case 0: return new Tomato(currentTexture,position);
+            case 1: return new Lettuce(currentTexture,position);
+            case 2: return new Lemon(currentTexture,position);
+            case 3: return new Tuna(currentTexture,position);
+            case 4: return new Bread(currentTexture,position);
+            case 5: return new GBeef(currentTexture,position);
+            case 6: return new Eggplant(currentTexture,position);
+            case 7: return new Yogurt(currentTexture,position);
+            case 8: return new Cream(currentTexture,position);
+            case 9: return new Butter(currentTexture,position);
+            case 10: return new Chicken(currentTexture,position);
+            case 11: return new Mushroom(currentTexture,position);
+            case 12: return new Chocolate(currentTexture,position);
+            case 13: return new Banana(currentTexture,position);
+            case 14: return new Biscuit(currentTexture,position);
 
-    public void Attack() { }
-    public void DealDamage() { }
+            default: return null;
+           
+            
+
+        }
+    }
+   
 }
-
 

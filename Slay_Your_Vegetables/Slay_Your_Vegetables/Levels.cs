@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework.Graphics;
-
+using Microsoft.Xna.Framework;
 
 public interface ILevel
 {
@@ -8,15 +8,34 @@ public interface ILevel
     Dictionary<int, int> SpawnedCounters { get; }
     List<int> SpawnPool {get;}
     float spawnPeriod{get;}
+    bool IsTutorialActive { get; }
+    void Update(GameTime gameTime);
+    void Draw(SpriteBatch spriteBatch);
 }
 public class LevelManage
 {
     public ILevel CurrentLevel{get;private set;}
+    private GraphicsDevice graphicsDevice;
+    private SpriteFont font,titleF;
+    private Texture2D recipeT;
+
+    public LevelManage(GraphicsDevice graphicsDevice, SpriteFont font, SpriteFont title,Texture2D recipe)
+    {
+        this.graphicsDevice = graphicsDevice;
+        this.font = font;
+        recipeT = recipe;
+        titleF= title;
+    }
     public void LoadLevel(int lvlNumber)
     {
         switch (lvlNumber) //Add levels in here 
         {
-            case 1: CurrentLevel= new Level1(); break;
+            case 1: CurrentLevel= new Level1(graphicsDevice,font,titleF,recipeT); break;
+            case 2: CurrentLevel= new Level2(graphicsDevice,font,titleF,recipeT); break;
+            case 3: CurrentLevel= new Level3(graphicsDevice,font,titleF,recipeT); break;
+            case 4: CurrentLevel= new Level4(graphicsDevice,font,titleF,recipeT); break;
+            case 5: CurrentLevel= new Level5(graphicsDevice,font,titleF,recipeT); break;
+
 
             default: CurrentLevel=null; break;
             
@@ -38,13 +57,32 @@ public class Level1: ILevel //Salad tomato(0),lettuce(1),lemon(2),tuna(3)
     };
     public List<int> SpawnPool => new List<int> {0,1,2,3}; // The requirement (enemy ID's)
      public float spawnPeriod=> 3.0f;
+
+     public bool IsTutorialActive { get; private set; } = true;
+     private Recipe recipe;
+     public Level1(GraphicsDevice graphicsDevice, SpriteFont font,SpriteFont title, Texture2D recipeTexture)
+    {
+        recipe= new Salad(graphicsDevice,font,title,recipeTexture);
+        recipe.Pressed += () => IsTutorialActive= false;
+    }
+    public void Update(GameTime gameTime)
+    {
+        if (IsTutorialActive)
+        {
+            recipe.Update(gameTime);
+            return;
+        }
+    }
      public void Draw(SpriteBatch spriteBatch)
     {
-        
+        if (IsTutorialActive)
+        {
+            recipe.Draw(spriteBatch);
+        }
     }
 
 }
-public class Level2 // Hamburger tomato(0),lettuce(1),bread(4),gbeef(5)
+public class Level2: ILevel // Hamburger tomato(0),lettuce(1),bread(4),gbeef(5)
 {
 public Dictionary<int,int> Goals => new Dictionary<int, int> // look at the enemies ID in enemy.cs 
      {
@@ -57,12 +95,31 @@ public Dictionary<int,int> Goals => new Dictionary<int, int> // look at the enem
     };
     public List<int> SpawnPool => new List<int> {0,1,4,5}; // The requirement (enemy ID's)
      public float spawnPeriod=> 3.0f;
+    
+     public bool IsTutorialActive { get; private set; } = true;
+     private Recipe recipe;
+     public Level2(GraphicsDevice graphicsDevice, SpriteFont font,SpriteFont title, Texture2D recipeTexture)
+    {
+        recipe= new Hamburger(graphicsDevice,font,title,recipeTexture);
+        recipe.Pressed += () => IsTutorialActive= false;
+    }
+    public void Update(GameTime gameTime)
+    {
+        if (IsTutorialActive)
+        {
+            recipe.Update(gameTime);
+            return;
+        }
+    }
      public void Draw(SpriteBatch spriteBatch)
     {
-        
+        if (IsTutorialActive)
+        {
+            recipe.Draw(spriteBatch);
+        }
     }
 }
-public class Level3 // Ali Nazik tomato(0), gbeef(5),eggplant(6),yogurt(7)
+public class Level3:ILevel // Ali Nazik tomato(0), gbeef(5),eggplant(6),yogurt(7)
 {
    public Dictionary<int,int> Goals => new Dictionary<int, int> // look at the enemies ID in enemy.cs 
      {
@@ -75,12 +132,31 @@ public class Level3 // Ali Nazik tomato(0), gbeef(5),eggplant(6),yogurt(7)
     };
     public List<int> SpawnPool => new List<int> {0,5,6,7}; // The requirement (enemy ID's)
      public float spawnPeriod=> 3.0f;
+      public bool IsTutorialActive { get; private set; } = true;
+     private Recipe recipe;
+     public Level3(GraphicsDevice graphicsDevice, SpriteFont font,SpriteFont title, Texture2D recipeTexture)
+    {
+        recipe= new AliNazik(graphicsDevice,font,title,recipeTexture);
+        recipe.Pressed += () => IsTutorialActive= false;
+    }
+    public void Update(GameTime gameTime)
+    {
+        if (IsTutorialActive)
+        {
+            recipe.Update(gameTime);
+            return;
+        }
+    }
      public void Draw(SpriteBatch spriteBatch)
     {
-        
+        if (IsTutorialActive)
+        {
+            recipe.Draw(spriteBatch);
+        }
     }
+    
 }
-public class Level4 // Soup cream(8),butter(9),chicken(10),mushroom(11)
+public class Level4 :ILevel// Soup cream(8),butter(9),chicken(10),mushroom(11)
 {
     public Dictionary<int,int> Goals => new Dictionary<int, int> // look at the enemies ID in enemy.cs 
      {
@@ -93,12 +169,31 @@ public class Level4 // Soup cream(8),butter(9),chicken(10),mushroom(11)
     };
     public List<int> SpawnPool => new List<int> {8,9,10,11}; // The requirement (enemy ID's)
      public float spawnPeriod=> 3.0f;
+      public bool IsTutorialActive { get; private set; } = true;
+     private Recipe recipe;
+     public Level4(GraphicsDevice graphicsDevice, SpriteFont font,SpriteFont title, Texture2D recipeTexture)
+    {
+        recipe= new Soup(graphicsDevice,font,title,recipeTexture);
+        recipe.Pressed += () => IsTutorialActive= false;
+    }
+    public void Update(GameTime gameTime)
+    {
+        if (IsTutorialActive)
+        {
+            recipe.Update(gameTime);
+            return;
+        }
+    }
      public void Draw(SpriteBatch spriteBatch)
     {
-        
+        if (IsTutorialActive)
+        {
+            recipe.Draw(spriteBatch);
+        }
     }
+    
 }
-public class Level5 // Dessert cream(8),chocolate(12),banana(13), biscuit(14)
+public class Level5:ILevel // Dessert cream(8),chocolate(12),banana(13), biscuit(14)
 {
     public Dictionary<int,int> Goals => new Dictionary<int, int> // look at the enemies ID in enemy.cs 
      {
@@ -111,9 +206,27 @@ public class Level5 // Dessert cream(8),chocolate(12),banana(13), biscuit(14)
     };
     public List<int> SpawnPool => new List<int> {8,12,13,14}; // The requirement (enemy ID's)
      public float spawnPeriod=> 3.0f;
+      public bool IsTutorialActive { get; private set; } = true;
+     private Recipe recipe;
+     public Level5(GraphicsDevice graphicsDevice, SpriteFont font, SpriteFont title,Texture2D recipeTexture)
+    {
+        recipe= new Dessert(graphicsDevice,font,title,recipeTexture);
+        recipe.Pressed += () => IsTutorialActive= false;
+    }
+    public void Update(GameTime gameTime)
+    {
+        if (IsTutorialActive)
+        {
+            recipe.Update(gameTime);
+            return;
+        }
+    }
      public void Draw(SpriteBatch spriteBatch)
     {
-        
+        if (IsTutorialActive)
+        {
+            recipe.Draw(spriteBatch);
+        }
     }
 }
 

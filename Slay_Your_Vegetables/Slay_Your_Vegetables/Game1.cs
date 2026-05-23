@@ -11,15 +11,15 @@ public class Game1 : Game
     private GraphicsDeviceManager _graphics;
     public static Microsoft.Xna.Framework.Content.ContentManager ContentManager;
     private SpriteBatch _spriteBatch;
-    Texture2D _line1, _line2, _line3, _line4, requirements, weaponUI, UltUI, HealthUI, StaminaUI, ManaUI, texture, recipeT,kitchenT;
+    Texture2D _line1, _line2, _line3, _line4, requirements, weaponUI, UltUI, HealthUI, StaminaUI, ManaUI, texture, recipeT,kitchenT; // RECIPE VE KITCHEN YENİ!!!!!
     LevelManage levelManage;
     SpawnManage spawnManage;
     Vector2 position;
-    private enum GameState { HowToPlay, Playing }
-    private GameState _currentState;
-    private SpriteFont font,titleF;
-    private Recipe recipe;
-    private int CurrentLevel = 1;
+    private enum GameState { HowToPlay, Playing } //HOW TO PLAY İÇİNNN
+    private GameState _currentState;//YENİ EKLENDİ 
+    private SpriteFont font,titleF; //HOW TO PLAY FONTLARI
+    private Recipe recipe; //HOW TO PLAY İÇİN SINIFLAR
+    private int CurrentLevel = 1; //ŞU ANKİ SEVİYE
     Random random = new Random();
     public Rectangle Rectangle => new((int)position.X, (int)position.Y, texture.Width, texture.Height);
 
@@ -62,17 +62,17 @@ public class Game1 : Game
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
         ContentManager = this.Content;
-        font = Content.Load<SpriteFont>("Fonts/font1");//recipe font
-        titleF=Content.Load<SpriteFont>("Fonts/titleF");
-        recipeT = Content.Load<Texture2D>("recipeP");
-        kitchenT=Content.Load<Texture2D>("kitchenT");
+        font = Content.Load<SpriteFont>("Fonts/font1");//YENİ EKLENENLER YÜKLENDİ
+        titleF=Content.Load<SpriteFont>("Fonts/titleF");//YENİ EKLENENLER YÜKLENDİ
+        recipeT = Content.Load<Texture2D>("recipeP");//YENİ EKLENENLER YÜKLENDİ
+        kitchenT=Content.Load<Texture2D>("kitchenT");//YENİ EKLENENLER YÜKLENDİ
 
-        levelManage = new LevelManage(GraphicsDevice,font,titleF,recipeT);
+        levelManage = new LevelManage(GraphicsDevice,font,titleF,recipeT);// PARANTEZ DOLDU
         levelManage.LoadLevel(CurrentLevel);
 
         if (Enemy.textures.Count == 0)
         {
-            Enemy.textures.Add(0, Content.Load<Texture2D>("tomatoT"));
+            Enemy.textures.Add(0, Content.Load<Texture2D>("tomatoT"));//TEXTURELAR TAMAMLANDI
             Enemy.textures.Add(1, Content.Load<Texture2D>("lettuceT"));
             Enemy.textures.Add(2, Content.Load<Texture2D>("lemonT"));
             Enemy.textures.Add(3, Content.Load<Texture2D>("tunaT"));
@@ -113,12 +113,12 @@ public class Game1 : Game
         if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
             Exit();
         
-        if (levelManage.CurrentLevel != null)
+        if (levelManage.CurrentLevel != null) // SEVİYE AYARI
         {
             levelManage.CurrentLevel.Update(gameTime);
         }
         
-        if (levelManage.CurrentLevel != null && levelManage.CurrentLevel.IsTutorialActive)
+        if (levelManage.CurrentLevel != null && levelManage.CurrentLevel.IsTutorialActive)//TUTORIAL ÇALIŞMASI İÇİN
         {
             base.Update(gameTime);
             return; 
@@ -128,15 +128,14 @@ public class Game1 : Game
             spawnManage.Update(gameTime);
         }
 
-        if (Keyboard.GetState().IsKeyDown(Keys.N))
+        if (Keyboard.GetState().IsKeyDown(Keys.N))//SİL (how to playi kontrol etmek içindi)
         {
             NextLevel();
-        }//SİL (how to playi kontrol etmek içindi)
+        }
         
-        // TODO: Add your update logic here
     }
 
-    private void NextLevel()
+    private void NextLevel() //SIRADAKİ SEVİYEYE GEÇMEK İÇİN YAZDIYSAN SİL
     {
         if (spawnManage != null)
     {
@@ -161,8 +160,8 @@ public class Game1 : Game
         _spriteBatch.Begin(transformMatrix: scalingMatrix);
 
         
-        _spriteBatch.Draw(kitchenT, new Rectangle(0, 0, 2448, 2448), Color.White);
-        _spriteBatch.Draw(_line1, new Rectangle(600, 120, 1320, 200), Color.Beige);
+        _spriteBatch.Draw(kitchenT, new Rectangle(0, 0, 2448, 2448), Color.White); //MUTFAK TEXTUREI
+        _spriteBatch.Draw(_line1, new Rectangle(600, 120, 1320, 200), Color.Beige); //RENKLERİ BİRAZ DAHA KOYU KAHVERENGİ YAPILABİLİR GÖZÜKMÜYORLAR (çikolatadan koyu renkte olmasın)
         _spriteBatch.Draw(_line2, new Rectangle(600, 330, 1320, 200), Color.Beige);
         _spriteBatch.Draw(_line3, new Rectangle(600, 540, 1320, 200), Color.Beige);
         _spriteBatch.Draw(_line4, new Rectangle(600, 750, 1320, 200), Color.Beige);
@@ -179,7 +178,7 @@ public class Game1 : Game
             levelManage.CurrentLevel.Draw(_spriteBatch);
         }
         //ADD SPRITES 
-        if (spawnManage != null && levelManage.CurrentLevel !=null && !levelManage.CurrentLevel.IsTutorialActive)
+        if (spawnManage != null && levelManage.CurrentLevel !=null && !levelManage.CurrentLevel.IsTutorialActive)//BURASI DÜZENLENDİ TUTORIAL İÇİN
         {
             spawnManage.Draw(_spriteBatch);
         }

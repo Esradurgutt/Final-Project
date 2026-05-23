@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 
 namespace Slay_Your_Vegetables;
-
+public enum GameState { MainMenu, Playing, Options }
 public class Game1 : Game
 {
     private GraphicsDeviceManager _graphics;
@@ -33,7 +33,7 @@ public class Game1 : Game
         texture.SetData(data);
         return texture;
     }
-
+    
 
     public Game1()
     {
@@ -53,6 +53,7 @@ public class Game1 : Game
     {
         
         // TODO: Add your initialization logic here
+
 
         base.Initialize();
     }
@@ -106,10 +107,7 @@ public class Game1 : Game
         _line4 = Content.Load<Texture2D>("line4");
         // TODO: use this.Content to load your game content here
 
-
     }
-
-
     protected override void Update(GameTime gameTime)
     {
         if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
@@ -133,11 +131,9 @@ public class Game1 : Game
         if (Keyboard.GetState().IsKeyDown(Keys.N))
         {
             NextLevel();
-        }
+        }//SİL (how to playi kontrol etmek içindi)
         
         // TODO: Add your update logic here
-
-        base.Update(gameTime);
     }
 
     private void NextLevel()
@@ -151,6 +147,7 @@ public class Game1 : Game
         {
             levelManage.LoadLevel(CurrentLevel);
         }
+    
     }
 
     protected override void Draw(GameTime gameTime)
@@ -190,4 +187,4 @@ public class Game1 : Game
 
         base.Draw(gameTime);
     }
-}
+} 

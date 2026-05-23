@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
+using System.Collections.Generic;
 
 namespace Slay_Your_Vegetables;
 
@@ -10,10 +11,15 @@ public class Game1 : Game
     private GraphicsDeviceManager _graphics;
     public static Microsoft.Xna.Framework.Content.ContentManager ContentManager;
     private SpriteBatch _spriteBatch;
-    Texture2D _line1, _line2, _line3, _line4, requirements, weaponUI, UltUI, HealthUI, StaminaUI, ManaUI, texture;
+    Texture2D _line1, _line2, _line3, _line4, requirements, weaponUI, UltUI, HealthUI, StaminaUI, ManaUI, texture, recipeT,kitchenT;
     LevelManage levelManage;
     SpawnManage spawnManage;
     Vector2 position;
+    private enum GameState { HowToPlay, Playing }
+    private GameState _currentState;
+    private SpriteFont font,titleF;
+    private Recipe recipe;
+    private int CurrentLevel = 1;
     Random random = new Random();
     public Rectangle Rectangle => new((int)position.X, (int)position.Y, texture.Width, texture.Height);
 
@@ -45,8 +51,7 @@ public class Game1 : Game
 
     protected override void Initialize()
     {
-        levelManage = new LevelManage();
-        levelManage.LoadLevel(1);
+        
         // TODO: Add your initialization logic here
 
         base.Initialize();
@@ -56,14 +61,32 @@ public class Game1 : Game
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
         ContentManager = this.Content;
+        font = Content.Load<SpriteFont>("Fonts/font1");//recipe font
+        titleF=Content.Load<SpriteFont>("Fonts/titleF");
+        recipeT = Content.Load<Texture2D>("recipeP");
+        kitchenT=Content.Load<Texture2D>("kitchenT");
 
+        levelManage = new LevelManage(GraphicsDevice,font,titleF,recipeT);
+        levelManage.LoadLevel(CurrentLevel);
 
         if (Enemy.textures.Count == 0)
         {
             Enemy.textures.Add(0, Content.Load<Texture2D>("tomatoT"));
             Enemy.textures.Add(1, Content.Load<Texture2D>("lettuceT"));
             Enemy.textures.Add(2, Content.Load<Texture2D>("lemonT"));
-            Enemy.textures.Add(3, Content.Load<Texture2D>("breadT"));
+            Enemy.textures.Add(3, Content.Load<Texture2D>("tunaT"));
+            Enemy.textures.Add(4, Content.Load<Texture2D>("breadT"));
+            Enemy.textures.Add(5, Content.Load<Texture2D>("gbeefT"));
+            Enemy.textures.Add(6, Content.Load<Texture2D>("eggplantT"));
+            Enemy.textures.Add(7, Content.Load<Texture2D>("yogurtT"));
+            Enemy.textures.Add(8, Content.Load<Texture2D>("creamT"));
+            Enemy.textures.Add(9, Content.Load<Texture2D>("butterT"));
+            Enemy.textures.Add(10, Content.Load<Texture2D>("chickenT"));
+            Enemy.textures.Add(11, Content.Load<Texture2D>("mushroomT"));
+            Enemy.textures.Add(12, Content.Load<Texture2D>("chocolateT"));
+            Enemy.textures.Add(13, Content.Load<Texture2D>("bananaT"));
+            Enemy.textures.Add(14, Content.Load<Texture2D>("biscuitT"));
+
         }
         spawnManage = new SpawnManage(levelManage, Enemy.textures);
 
@@ -91,14 +114,43 @@ public class Game1 : Game
     {
         if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
             Exit();
+        
+        if (levelManage.CurrentLevel != null)
+        {
+            levelManage.CurrentLevel.Update(gameTime);
+        }
+        
+        if (levelManage.CurrentLevel != null && levelManage.CurrentLevel.IsTutorialActive)
+        {
+            base.Update(gameTime);
+            return; 
+        }
         if (spawnManage != null)
         {
             spawnManage.Update(gameTime);
         }
 
+        if (Keyboard.GetState().IsKeyDown(Keys.N))
+        {
+            NextLevel();
+        }
+        
         // TODO: Add your update logic here
 
         base.Update(gameTime);
+    }
+
+    private void NextLevel()
+    {
+        if (spawnManage != null)
+    {
+        spawnManage.ClearEnemies();
+    }
+        CurrentLevel++;
+        if (CurrentLevel <= 5) // we have 5 lvls
+        {
+            levelManage.LoadLevel(CurrentLevel);
+        }
     }
 
     protected override void Draw(GameTime gameTime)
@@ -111,6 +163,8 @@ public class Game1 : Game
 
         _spriteBatch.Begin(transformMatrix: scalingMatrix);
 
+        
+        _spriteBatch.Draw(kitchenT, new Rectangle(0, 0, 2448, 2448), Color.White);
         _spriteBatch.Draw(_line1, new Rectangle(600, 120, 1320, 200), Color.Beige);
         _spriteBatch.Draw(_line2, new Rectangle(600, 330, 1320, 200), Color.Beige);
         _spriteBatch.Draw(_line3, new Rectangle(600, 540, 1320, 200), Color.Beige);
@@ -123,12 +177,13 @@ public class Game1 : Game
         _spriteBatch.Draw(StaminaUI, new Rectangle(10, 435, 150, 20), Color.Yellow);
         _spriteBatch.Draw(ManaUI, new Rectangle(10, 455, 150, 20), Color.Blue);
 
-
-        //ADD SPRITES 
-        if (spawnManage != null)
+        if (levelManage.CurrentLevel != null)
         {
-
-
+            levelManage.CurrentLevel.Draw(_spriteBatch);
+        }
+        //ADD SPRITES 
+        if (spawnManage != null && levelManage.CurrentLevel !=null && !levelManage.CurrentLevel.IsTutorialActive)
+        {
             spawnManage.Draw(_spriteBatch);
         }
         _spriteBatch.End();

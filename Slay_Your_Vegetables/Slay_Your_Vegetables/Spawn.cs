@@ -96,6 +96,14 @@ public class SpawnManage
             }
         }
     }
+    public void ClearEnemies()
+    {
+    
+        if (enemies != null)
+        {
+            enemies.Clear();
+        }
+    }
 
 }
 
